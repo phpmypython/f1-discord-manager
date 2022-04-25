@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 
-require('../utils/ExtendedMessage');
+
 
 module.exports = {
     async run(client, servers) {
@@ -16,7 +16,7 @@ module.exports = {
                 });
             }
         }
-        client.on('message', async (message) => {
+        client.on('messageCreate', async (message) => {
             if (!message.author) return;
             if (message.author.bot) return;
             if (!message.guild) return;

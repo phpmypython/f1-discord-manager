@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const {Discord,Collection,MessageActionRow,MessageButton,MessageEmbed} = require('discord.js')
 const Server = require('../items/Server');
 const Team = require('../items/Team');
 const Tier = require('../items/Tier');
@@ -10,15 +10,15 @@ module.exports = {
     usage: '',
     description: 'Setup tiers and teams',
     /**
-     * @param {Discord.Client} client 
-     * @param {Server} server 
-     * @param {string} command 
-     * @param {string[]} args 
+     * @param {Discord.Client} client
+     * @param {Server} server
+     * @param {string} command
+     * @param {string[]} args
      * @param {Discord.Message} message
      */
     async run(client, server, command, args, message) {
         if (isStaff(message.member)) {
-            const embed = new Discord.MessageEmbed();
+            const embed = new MessageEmbed();
             embed.setColor('RED');
             if (server.getTierManager().tiers.size !== 0) {
                 embed.setTitle('You already have at least 1 existing tier! This command is only used for setup!');
@@ -29,10 +29,11 @@ module.exports = {
             .setDescription(
             `A default league means each tier will have 10 teams according to the F1 game.
             E.g. Mercedes, Ferrari ... Williams`);
-            const reply = await message.channel.send(embed);
+            console.log(message.channel)
+            const reply = await message.channel.send({embeds:[embed]});
             await reply.react('🇩');
             await reply.react('🇨');
-            let filter = (r, u) => (r.message.id === reply.id && u.id === message.member.id && (r.emoji.name === '🇨' || r.emoji.name === '🇩')); 
+            let filter = (r, u) => (r.message.id === reply.id && u.id === message.member.id && (r.emoji.name === '🇨' || r.emoji.name === '🇩'));
             const replyCollector = reply.createReactionCollector(filter, {
                 max: 1, time: 60000
             });
@@ -109,7 +110,7 @@ module.exports = {
                                                 /**
                                                  * @type {Discord.Collection<string, string>}
                                                  */
-                                                const teamNames = new Discord.Collection();
+                                                const teamNames = new Collection();
                                                 teamNames.set('Mercedes-AMG Petronas', 'https://cdn.discordapp.com/emojis/801293471440175105.png');
                                                 teamNames.set('Scuderia Ferrari', 'https://cdn.discordapp.com/emojis/801293471355895829.png');
                                                 teamNames.set('Redbull Racing', 'https://cdn.discordapp.com/emojis/801293470668554241.png');
@@ -142,7 +143,7 @@ module.exports = {
                                                             }
                                                             const remainingSlots = numOfEmoji - server.guild.emojis.cache.size;
                                                             if (remainingSlots >= 10) {
-                                                                //addEmoji = true;
+                                                                addEmoji = true;
                                                             }
                                                             teamNames.forEach(async (image, name) => {
                                                                 var newName = name;
@@ -206,16 +207,12 @@ module.exports = {
                             }
                         });
                     } else if (reaction.emoji.name === '🇨') {
-                        const embed6 = new Discord.MessageEmbed();
-                        embed6.setTitle('You currently do not have premium!');
-                        embed6.setDescription('Only premium guilds have this option!');
-                        embed6.setColor('RED');
-                        message.channel.send(embed6);
+
                     }
                 } else {
                     const embed2 = new Discord.MessageEmbed().setTitle('Ran out of time!');
                     embed2.setColor('RED');
-                    message.channel.send(embed2);
+                    message.channel.send({embeds:[embed2]});
                 }
             });
         }

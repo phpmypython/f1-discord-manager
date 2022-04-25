@@ -8,14 +8,14 @@ const Tier = require('../items/Tier');
 const formatTrack = require('../utils/formatTrack');
 const { timezones } = require('../utils/timezones');
 const { Logger } = require('../utils/Utils');
-const { MessageActionRow, MessageButton } = require('discord-buttons');
+const { MessageActionRow, MessageButton } = require('discord.js');
 const formatDateURL = require('../utils/formatDateURL');
 const OpenAttendance = require('../items/OpenAttendance');
 
 class AttendanceManager {
     /**
      * @param {Discord.Client} client
-     * @param {Server} server 
+     * @param {Server} server
      */
     constructor(client, server) {
         /**
@@ -47,11 +47,11 @@ class AttendanceManager {
     static get numbers() { return ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟", "🇦", "🇧","🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮", "🇯"]; }
 
     /**
-     * 
-     * @param {Server} server 
-     * @param {Discord.GuildMember} member 
+     *
+     * @param {Server} server
+     * @param {Discord.GuildMember} member
      * @param {Discord.TextChannel} channel
-     * @returns {Promise<OpenAttendance>} 
+     * @returns {Promise<OpenAttendance>}
      */
     async newOpenAttendance(server, member, channel) {
         const embed = new Discord.MessageEmbed().setColor('RED');
@@ -99,7 +99,7 @@ class AttendanceManager {
                     }
                     if (counter === questions.length) {
                         embed3.setDescription(tierNames.join('\n'));
-                    } 
+                    }
                     member.user.send(embed3);
                 }
             });
@@ -200,10 +200,10 @@ class AttendanceManager {
 
     /**
      * @param {Discord.Client} client
-     * @param {Discord.GuildMember} member 
+     * @param {Discord.GuildMember} member
      * @param {Server} server
-     * @param {Discord.TextChannel} channel 
-     * @returns {Promise<AdvancedAttendance>} 
+     * @param {Discord.TextChannel} channel
+     * @returns {Promise<AdvancedAttendance>}
      */
     async newAdvancedAttendance(client, server, member, channel) {
         const embed = new Discord.MessageEmbed();
@@ -252,7 +252,7 @@ class AttendanceManager {
                     }
                     if (counter === questions.length) {
                         embed3.setDescription(tierNames.join('\n'));
-                    } 
+                    }
                     member.user.send(embed3);
                 }
             });
@@ -378,14 +378,14 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {string} title 
-     * @param {string} description 
-     * @param {Date} date 
+     *
+     * @param {string} title
+     * @param {string} description
+     * @param {Date} date
      * @param {string} timezone
-     * @param {Tier} t 
-     * @param {Discord.TextChannel} channel 
-     * @param {function} resolve 
+     * @param {Tier} t
+     * @param {Discord.TextChannel} channel
+     * @param {function} resolve
      */
     async createAdvanced(title, description, date, timezone, t, channel, resolve) {
         const attendanceembed = new Discord.MessageEmbed();
@@ -458,7 +458,7 @@ class AttendanceManager {
     }
 
     /**
-     * @param {Attendance | AdvancedAttendance} attendance 
+     * @param {Attendance | AdvancedAttendance} attendance
      */
     async createSchedule(attendance) {
         if (attendance.next) {
@@ -560,9 +560,9 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.GuildMember} member 
-     * @param {Discord.TextChannel} channel 
+     *
+     * @param {Discord.GuildMember} member
+     * @param {Discord.TextChannel} channel
      * @returns {Promise<Attendance>}
      */
     async newAttendance(member, channel) {
@@ -686,7 +686,7 @@ class AttendanceManager {
     }
 
     /**
-     * 
+     *
      * @param {Discord.GuildMember} member
      */
     async editAttendance(member) {
@@ -820,7 +820,7 @@ class AttendanceManager {
     }
 
     /**
-     * 
+     *
      * @param {Discord.GuildMember} member
      * @param {AdvancedAttendance} attendanceevent
      */
@@ -946,8 +946,8 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Message} message
      * @param {Date} date
      */
     loadAttendance(message, date) {
@@ -958,8 +958,8 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Message} message
      * @param {Tier} tier
      * @param {Date} date
      */
@@ -971,8 +971,8 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Message} message
      * @param {Tier} tier
      * @param {Date} date
      */
@@ -984,7 +984,7 @@ class AttendanceManager {
     }
 
     /**
-     * 
+     *
      * @param {Discord.MessageReaction} reaction
      * @param {Discord.User} user
      */
@@ -1025,7 +1025,7 @@ class AttendanceManager {
     }
 
     /**
-     * 
+     *
      * @param {Discord.MessageReaction} reaction
      * @param {Discord.User} user
      */
@@ -1066,7 +1066,7 @@ class AttendanceManager {
     }
 
     /**
-     * 
+     *
      * @param {Discord.MessageReaction} reaction
      * @param {Discord.User} user
      */
@@ -1107,8 +1107,8 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Message} message
      */
     deleteAttendance(message) {
         const attendanceevent = this.fetch(message.id);
@@ -1131,8 +1131,8 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Message} message
      */
     deleteAdvancedAttendance(message) {
         const attendanceevent = this.fetchAdvanced(message.id);
@@ -1153,8 +1153,8 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Message} message
      */
     deleteOpenAttendance(message) {
         const attendanceevent = this.fetchOpen(message.id);
@@ -1175,24 +1175,24 @@ class AttendanceManager {
     }
 
     /**
-     * 
-     * @param {string} id 
+     *
+     * @param {string} id
     */
     fetch(id) {
         return this.events.get(id);
     }
 
     /**
-     * 
-     * @param {string} id 
+     *
+     * @param {string} id
      */
     fetchAdvanced(id) {
         return this.advancedEvents.get(id);
     }
 
     /**
-     * 
-     * @param {string} id 
+     *
+     * @param {string} id
      */
     fetchOpen(id) {
         return this.openEvents.get(id);

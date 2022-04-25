@@ -15,7 +15,7 @@ class Database {
     static newConnection = undefined;
 
     static db() {
-        if (Database.connection == null || Database.connection == undefined) {
+        if (Database.connection == null) {
             Database.connection = new sql.Database('./botdb.db', (err) => {
                 if (err) {
                 console.log(err.message);
@@ -28,7 +28,7 @@ class Database {
 
                 Database.connection.run('CREATE TABLE IF NOT EXISTS drivers (id VARCHAR(32), guild VARCHAR(32), number VARCHAR(3), reserved INT, team VARCHAR(32), tier VARCHAR(255))');
                 Database.connection.run('CREATE TABLE IF NOT EXISTS advancedattendance (id VARCHAR(32) PRIMARY KEY, date VARCHAR(20), channel VARCHAR(32), tier VARCHAR(255))');
-                Database.connection.run('CREATE TABLE IF NOT EXISTS tiers (guild VARCHAR(32), name VARCHAR(255))');
+                Database.connection.run('CREATE TABLE IF NOT EXISTS tiers (guild VARCHAR(32), name VARCHAR(255),role VARCHAR(32))');
                 Database.connection.run('CREATE TABLE IF NOT EXISTS teams (guild VARCHAR(32), name VARCHAR(255), tier VARCHAR(255))');
                 Database.connection.run('CREATE TABLE IF NOT EXISTS triggers (guild VARCHAR(32), trigger VARCHAR(255), response VARCHAR(255))');
                 Database.connection.run('CREATE TABLE IF NOT EXISTS reactionrolepanels (id VARCHAR(32) PRIMARY KEY, channel VARCHAR(32))');
@@ -55,10 +55,10 @@ class Database {
         }
         return Database.newConnection;
     }
-    
+
     /**
-     * 
-     * @param {"update" | "delete"} code 
+     *
+     * @param {"update" | "delete"} code
      */
     static getStatement(code) {
         switch (code.toLowerCase()) {
@@ -367,9 +367,9 @@ class Database {
     static get countDeleteQuery() { return "DELETE FROM count WHERE id=(?)"; }
 
     /**
-     * 
-     * @param {string} query 
-     * @param  {...string} args 
+     *
+     * @param {string} query
+     * @param  {...string} args
      * @return {Promise<boolean>}
      */
     static run(query, ...args) {
@@ -385,9 +385,9 @@ class Database {
     }
 
     /**
-     * 
-     * @param {string} query 
-     * @param  {...string} args 
+     *
+     * @param {string} query
+     * @param  {...string} args
      * @return {Promise<boolean>}
      */
     static runNewDB(query, ...args) {
@@ -403,9 +403,9 @@ class Database {
     }
 
     /**
-     * 
+     *
      * @param {string} query
-     * @returns {Promise<any[]>} 
+     * @returns {Promise<any[]>}
      */
     static all(query, ...args) {
         return new Promise((resolve, reject) => {
@@ -420,9 +420,9 @@ class Database {
     }
 
     /**
-     * 
+     *
      * @param {string} query
-     * @returns {Promise<any[]>} 
+     * @returns {Promise<any[]>}
      */
     static allNewDB(query, ...args) {
         return new Promise((resolve, reject) => {
@@ -437,7 +437,7 @@ class Database {
     }
 
     /**
-     * 
+     *
      * @param  {Query[]} queries
      */
     static multipleRun(queries) {
@@ -456,7 +456,7 @@ class Database {
     }
 
     /**
-     * 
+     *
      * @param  {Query[]} queries
      */
     static multipleRunNewDB(queries) {
@@ -475,7 +475,7 @@ class Database {
     }
 
     /**
-     * 
+     *
      * @param  {Query[]} queries
      * @returns {Promise<Collection<Query, any[]>}
      */
@@ -501,7 +501,7 @@ class Database {
     }
 
     /**
-     * 
+     *
      * @param  {Query[]} queries
      * @returns {Promise<Collection<Query, any[]>}
      */

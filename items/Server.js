@@ -22,13 +22,13 @@ class Server {
         this.guild = guild;
         this.modlog = modlog;
         this.alertChannel = alertChannel;
-        this.prefix = prefix || "-";
+        this.prefix = prefix || "--";
         this.joinEmbed = undefined;
         this.serverManager = serverManager;
         this.enableTickets = true;
         this.subbedChannels = [];
-        this.premium = false;
-        
+        this.premium = true;
+
         /**
          * @constant
          * @private
@@ -119,7 +119,7 @@ class Server {
         this.prefix = data.prefix;
         this.modlog = this.guild.channels.cache.get(data.log);
         this.joinEmbed = (data.embed != null ? new Discord.MessageEmbed(data.embed) : undefined);
-        
+
         this.enableTickets = data.tickets.enabled;
         this.ticketManager.totaltickets = data.tickets.total;
         data.tickets.open.forEach(async ticket => {
@@ -200,7 +200,7 @@ class Server {
         Logger.log(`[SERVER] Loaded ${this.guild.name}`);
     }
 
-    async setPrefix(prefix) { 
+    async setPrefix(prefix) {
         this.prefix = prefix;
         try {
             this.update();

@@ -1,18 +1,18 @@
 const Discord = require('discord.js');
 
 /**
- * 
+ *
  * @param {Discord.GuildMember} member
  * @returns {boolean}
  */
 function isStaff(member) {
-    return (member.hasPermission('MANAGE_CHANNELS') || 
-    member.hasPermission('MANAGE_MESSAGES') || 
-    member.hasPermission('KICK_MEMBERS') || 
-    member.hasPermission('MANAGE_GUILD') || 
-    member.hasPermission('BAN_MEMBERS') || 
-    member.hasPermission('MANAGE_ROLES') || 
-    member.hasPermission('VIEW_AUDIT_LOG'));
+    return (member.permissions.has('MANAGE_CHANNELS') ||
+    member.permissions.has('MANAGE_MESSAGES') ||
+    member.permissions.has('KICK_MEMBERS') ||
+    member.permissions.has('MANAGE_GUILD') ||
+    member.permissions.has('BAN_MEMBERS') ||
+    member.permissions.has('MANAGE_ROLES') ||
+    member.permissions.has('VIEW_AUDIT_LOG'));
 }
 
 module.exports = isStaff;

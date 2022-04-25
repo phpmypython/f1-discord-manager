@@ -5,14 +5,14 @@ const Driver = require('./Driver');
 const Database = require('../database/Database');
 const schedule = require('node-schedule');
 const { Logger } = require('../utils/Utils');
-const { MessageButton, MessageActionRow } = require('discord-buttons');
+const { MessageButton, MessageActionRow } = require('discord.js');
 const formatDateURL = require('../utils/formatDateURL');
 
 class OpenAttendance {
     /**
-     * 
-     * @param {Discord.Client} client 
-     * @param {Discord.Message} message 
+     *
+     * @param {Discord.Client} client
+     * @param {Discord.Message} message
      * @param {Server} server
      * @param {Tier} tier
      * @param {Date} date
@@ -170,8 +170,8 @@ class OpenAttendance {
     static get unlockEmoji() { return "🔓"; }
 
     /**
-     * 
-     * @param {Driver} driver 
+     *
+     * @param {Driver} driver
      */
     async accept(driver) {
         const field = this.embed.fields.find(field => field.value.includes(driver.id));
@@ -196,8 +196,8 @@ class OpenAttendance {
     }
 
     /**
-     * 
-     * @param {Driver} driver 
+     *
+     * @param {Driver} driver
      */
     async reject(driver) {
         const field = this.embed.fields.find(field => field.value.includes(driver.id));
@@ -222,8 +222,8 @@ class OpenAttendance {
     }
 
     /**
-     * 
-     * @param {Driver} driver 
+     *
+     * @param {Driver} driver
      */
     async maybe(driver) {
         const field = this.embed.fields.find(field => field.value.includes(driver.id));
@@ -368,9 +368,9 @@ class OpenAttendance {
     }
 
     /**
-     * 
-     * @param {string} oldTeamName 
-     * @param {string} newTeamName 
+     *
+     * @param {string} oldTeamName
+     * @param {string} newTeamName
      */
     async fixTeams(oldTeamName, newTeamName) {
         for (const field of this.embed.fields) {
@@ -410,9 +410,9 @@ class OpenAttendance {
     }
 
     /**
-     * 
-     * @param {Date} date 
-     * @param {string} dateString 
+     *
+     * @param {Date} date
+     * @param {string} dateString
      */
     updateDate(date, dateString) {
         this.date = date;
@@ -558,8 +558,8 @@ class OpenAttendance {
     }
 
     /**
-     * 
-     * @param {Discord.MessageEmbed} embed 
+     *
+     * @param {Discord.MessageEmbed} embed
      */
     loadAttendees(embed) {
         this.accepted.clear();

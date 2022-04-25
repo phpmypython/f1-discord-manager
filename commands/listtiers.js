@@ -7,10 +7,10 @@ module.exports = {
     usage: '< name >',
     description: 'Lists all the tiers',
     /**
-     * @param {Discord.Client} client 
-     * @param {Server} server 
-     * @param {string} command 
-     * @param {string[]} args 
+     * @param {Discord.Client} client
+     * @param {Server} server
+     * @param {string} command
+     * @param {string[]} args
      * @param {Discord.Message} message
      */
     async run(client, server, command, args, message) {
@@ -18,14 +18,17 @@ module.exports = {
         embed.setColor('RED');
         try {
             if (!args.length) {
-                embed.setAuthor('These are all the tiers:');
                 var tierList = '';
                 if (server.getTierManager().tiers.size === 0) {
-                    tierList = '-';
+                    embed.setAuthor('No Tiers exist');
+                } else {
+                    embed.setAuthor('These are all the tiers:');
+                    tierList = '-'
+                    server.getTierManager().tiers.forEach(tier => {
+                        tierList += `- ${tier.name}\n`;
+                    });
                 }
-                server.getTierManager().tiers.forEach(tier => {
-                    tierList += `- ${tier.name}\n`;
-                });
+
                 embed.setDescription(tierList);
                 embed.setFooter(`For more details on a tier, use ${server.prefix}${command} [name]`);
                 message.channel.send(embed);
